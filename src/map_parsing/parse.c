@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:15:38 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/15 11:44:32 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/15 14:33:46 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static int		check_piece_header(t_filler *filler, char *line)
 	return (i);
 }
 
-static int		check_piece(t_filler *filler)
+int				check_piece(t_filler *filler)
 {
 	char	*line;
 	int		i;

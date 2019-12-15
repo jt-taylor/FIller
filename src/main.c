@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 12:27:51 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/15 11:57:31 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/15 14:55:02 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,31 @@ static void	dump_struct_contents(t_filler *filler, int fd)
 	ft_dprintf(fd, "Map: fill me in");
 }
 
+static int	filler_loop(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	return (0);
+	while ((i = get_next_line(0, &line) >= 0))
+	{
+		if (!line)
+			continue ;
+		if (!ft_strncmp(line, "Plateau", 8))
+			re_fetch(filler);
+		//alg
+		free(line);
+	}
+	return (i);
+}
+
 int			main(void)
 {
 	t_filler		filler;
 
 	set_struct_val_zero(&filler);
 	filler_parser(&filler);
+	filler_loop(&filler);
 	dump_struct_contents(&filler, 2);
 	//sleep(100);
 	return (0);

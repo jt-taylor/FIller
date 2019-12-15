@@ -6,7 +6,7 @@
 #    By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/16 19:30:49 by jtaylor           #+#    #+#              #
-#    Updated: 2019/12/14 13:59:03 by jtaylor          ###   ########.fr        #
+#    Updated: 2019/12/15 14:51:15 by jtaylor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,9 @@ INCLUDES += -I ./includes
 
 SRC_FILE =	main.c \
 			map_parsing/parse.c \
-			map_parsing/map_specific_parsing.c
-			
+			map_parsing/map_specific_parsing.c \
+			map_parsing/update_map_and_piece.c
+
 SRC = $(addprefix ./src/, $(SRC_FILE))
 
 .PHONY = all clean fclean re
