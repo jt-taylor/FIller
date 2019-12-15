@@ -6,13 +6,14 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:15:38 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/14 21:36:18 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/15 11:44:32 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Filler.h"
+#include "filler.h"
 
-/* so it looks like most of the people seperate each component of the parsing
+/*
+** so it looks like most of the people seperate each component of the parsing
 ** functionality into seperate functions rather than reading everything at once
 */
 
@@ -55,6 +56,7 @@
 ** parses this component of the input
 ** $$$ exec p1 : [./jtaylor.player]
 */
+
 static int		check_exec(t_filler *filler)
 {
 	char	*line;
@@ -80,7 +82,6 @@ static int		check_exec(t_filler *filler)
 	filler->player = i;
 	return (i);
 }
-
 
 /*
 ** parses this part of the input
@@ -121,7 +122,6 @@ static int		check_piece(t_filler *filler)
 		while (i < filler->piece_size_y)
 		{
 			get_next_line(0, &filler->piece[i]);
-//			filler->piece[i] = line;
 			i++;
 		}
 		filler->piece[i] = NULL;

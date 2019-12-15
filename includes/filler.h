@@ -6,15 +6,15 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:18:09 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/14 13:49:34 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/15 11:41:45 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-#include "libft.h"
-#include "ft_printf.h"
+# include "libft.h"
+# include "ft_printf.h"
 
 typedef struct	s_filler
 {
@@ -34,6 +34,6 @@ typedef struct	s_filler
 ** prototypes
 */
 
-int		filler_parser(t_filler *filler);
-int		check_map(t_filler *filler);
+int				filler_parser(t_filler *filler);
+int				check_map(t_filler *filler);
 #endif
