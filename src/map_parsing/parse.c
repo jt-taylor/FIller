@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:15:38 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/14 14:15:47 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/14 17:57:27 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ static int		check_piece(t_filler *filler)
 			(char **)malloc(sizeof(char *) * (filler->piece_size_y + 1));
 		while (i < filler->piece_size_y)
 		{
-			get_next_line(0, &line);
-			filler->piece[i] = line;
+			get_next_line(0, &filler->piece[i]);
+//			filler->piece[i] = line;
 			i++;
 		}
 		filler->piece[i] = NULL;
@@ -148,6 +148,5 @@ int				filler_parser(t_filler *filler)
 	i = check_piece(filler);
 	if (!i)
 		return (i);
-	sleep(100);
 	return (i);
 }

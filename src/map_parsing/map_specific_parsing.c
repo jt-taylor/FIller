@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 13:06:05 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/14 14:14:03 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/14 18:14:08 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		check_map(t_filler *filler)
 		while (i < filler->map_dim_y)
 		{
 			get_next_line(0, &line);
-			filler->map_in[i] = (char *)malloc(sizeof(char) * (filler->map_dim_x + 1));
+			//filler->map_in[i] = (char *)malloc(sizeof(char) * (filler->map_dim_x + 1));
 			filler->map_in[i] = ft_strdup(line + 4);
 			free(line);
 			i++;
@@ -98,7 +98,6 @@ int		check_map(t_filler *filler)
 	}
 	else
 		i = -1;
-	free(line);
 	return (i);
 }
 

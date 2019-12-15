@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 12:27:51 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/14 13:48:46 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/14 17:48:49 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int		main(void)
 
 	set_struct_val_zero(&filler);
 	filler_parser(&filler);
+	sleep(100);
 	return (0);
 }
