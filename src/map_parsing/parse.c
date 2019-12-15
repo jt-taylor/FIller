@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:15:38 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/14 17:57:27 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/14 21:36:18 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int		check_exec(t_filler *filler)
 
 	if (get_next_line(0, &line))
 	{
-		if (ft_strstr(line, "jtaylor.player"))
+		if (ft_strstr(line, "jtaylor.filler"))
 		{
 			if (ft_strstr(line, "p1"))
 				i = 1;
