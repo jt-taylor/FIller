@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:18:09 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/15 14:51:33 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/16 11:39:29 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ int				filler_parser(t_filler *filler);
 int				check_map(t_filler *filler);
 int				check_piece(t_filler *filler);
 int				re_fetch(t_filler *filler);
+int				input_map_to_int_matrix(t_filler *filler);
 #endif
