@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 12:27:51 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/16 18:36:16 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/17 10:27:02 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void		set_struct_val_zero(t_filler *filler)
 	filler->map_dim_y = -1;
 	filler->piece_size_y = -1;
 	filler->piece_size_x = -1;
+	filler->check_start_x = -1;
+	filler->check_start_y = -1;
 	filler->player = -1;
 }
 
