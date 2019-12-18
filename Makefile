@@ -6,7 +6,7 @@
 #    By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/16 19:30:49 by jtaylor           #+#    #+#              #
-#    Updated: 2019/12/17 11:05:51 by jtaylor          ###   ########.fr        #
+#    Updated: 2019/12/17 12:52:34 by jtaylor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,9 @@ SRC_FILE =	main.c \
 			map_parsing/update_map_and_piece.c \
 			map_parsing/input_map_to_int_matrix.c \
 			cleanup/free_struct.c \
-			alg/find_closest_point.c
+			alg/find_closest_point.c \
+			alg/check_valid_piece.c \
+			alg/find_placement.c
 
 SRC = $(addprefix ./src/, $(SRC_FILE))
 

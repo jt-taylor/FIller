@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:18:09 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/17 11:06:06 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/17 12:56:50 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+
+/*
+** so we can return the x y cord
+*/
+
+typedef struct	s_point
+{
+	int		x;
+	int		y;
+}				t_point;
 
 typedef struct	s_filler
 {
@@ -33,6 +43,9 @@ typedef struct	s_filler
 	int		has_both_pieces;
 	int		check_start_x;
 	int		check_start_y;
+	int		p1_count;
+	int		p2_count;
+	t_point	point;
 }				t_filler;
 
 /*
@@ -46,4 +59,7 @@ int				re_fetch(t_filler *filler);
 int				input_map_to_int_matrix(t_filler *filler);
 void			free_struct(t_filler *filler);
 int				find_closest_point(t_filler *filler);
+int				check_if_valid_position(t_filler *filler, int x, int y);
+int				find_placement(t_filler *filler);
+
 #endif
