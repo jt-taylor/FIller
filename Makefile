@@ -6,13 +6,16 @@
 #    By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/16 19:30:49 by jtaylor           #+#    #+#              #
-#    Updated: 2019/12/17 12:52:34 by jtaylor          ###   ########.fr        #
+#    Updated: 2019/12/19 10:47:37 by jtaylor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = jtaylor.filler
 
 FLAGS = -Wall -Wextra -Werror -I ./libft/includes
+
+OPT_FLAGS = -Ofast
+FLAGS += $(OPT_FLAGS)
 
 DEBUG_FLAG = -g3
 

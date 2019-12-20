@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:20:02 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/15 14:53:19 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/19 11:47:47 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ int				re_fetch(t_filler *filler)
 		return (i);
 	i = fetch_new_piece(filler);
 	if (!i)
+		return (i);
+	i = re_input_map_to_int_matrix(filler);
+	if (i != 0)
 		return (i);
 	return (1);
 }

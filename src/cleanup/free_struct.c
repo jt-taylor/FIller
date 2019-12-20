@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 17:02:43 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/17 13:10:03 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/19 11:11:36 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** todo :: generic matrix(matrices(?)) free function
 */
 
-static void	filler_free_map(int **map)
+static inline void	filler_free_map(int **map)
 {
 	int		i;
 
@@ -26,7 +26,7 @@ static void	filler_free_map(int **map)
 	free(map);
 }
 
-static void	filler_free_map_in(char **map_in)
+static inline void	filler_free_map_in(char **map_in)
 {
 	int		i;
 
@@ -36,7 +36,7 @@ static void	filler_free_map_in(char **map_in)
 	free(map_in);
 }
 
-static void	filler_free_piece(char **piece)
+static inline void	filler_free_piece(char **piece)
 {
 	int	i;
 

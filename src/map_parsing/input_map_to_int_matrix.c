@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 10:52:06 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/16 18:28:07 by jtaylor          ###   ########.fr       */
+/*   Updated: 2019/12/19 11:48:24 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,25 @@ static void	check_valid_map(t_filler *filler)
 	}
 	if (filler->has_both_pieces != 3)
 		free_struct(filler);
+}
+
+int			re_input_map_to_int_matrix(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	while (filler->map[i])
+		free(filler->map[i++]);
+	free(filler->map);
+	i = 0;
+	i = malloc_for_int_matrix(filler);
+	if (i)
+		return (i);
+	i = input_map_to_int_values(filler);
+	if (i)
+		return (i);
+	check_valid_map(filler);
+	return (0);
 }
 
 int			input_map_to_int_matrix(t_filler *filler)
