@@ -1,12 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                        :::      ::::::::   */ /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/20 10:51:28 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/15 11:38:15 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/09 10:21:52 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +118,7 @@ char			*ft_strtok(char *s, char *delim);
 int				ft_strcspn(char *string, char *lim);
 int				ft_stronly_space(char *str);
 int				ft_strstart_w_str(char *str, char *s);
+unsigned int	ft_count_instance_of_char_lim(char *str, char c, int limit);
+unsigned int	ft_count_instance_of_char_in_str(char *str, char c);
 
 #endif
