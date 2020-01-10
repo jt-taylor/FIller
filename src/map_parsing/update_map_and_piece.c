@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:20:02 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/19 11:47:47 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/09 18:04:04 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ** it doesn't make sense to re check for it
 */
 
+/*
 static int		check_map_no_header_check(t_filler *filler)
 {
 	char	*line;
@@ -48,7 +49,7 @@ static int		fetch_new_map(t_filler *filler)
 	int		i;
 
 	i = 0;
-	while (filler->map_in[i])
+	while (i < hfiller->map_dim_y)
 		free(filler->map_in[i++]);
 	free(filler->map_in);
 	i = check_map_no_header_check(filler);
@@ -61,6 +62,35 @@ static int		fetch_new_piece(t_filler *filler)
 
 	i = 0;
 	while (filler->piece[i])
+		free(filler->piece[i++]);
+	free(filler->piece);
+	i = check_piece(filler);
+	return (i);
+}
+*/
+
+static int		fetch_new_map(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	while (i < filler->map_dim_y)
+	{
+		free(filler->map[i]);
+		free(filler->map_in[i++]);
+	}
+	free(filler->map_in);
+	free(filler->map);
+	i = check_map(filler);
+	return (i);
+}
+
+static int		fetch_new_piece(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	while (i < filler->piece_size_y)
 		free(filler->piece[i++]);
 	free(filler->piece);
 	i = check_piece(filler);

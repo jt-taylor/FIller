@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 12:27:51 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/18 13:46:59 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/09 17:38:51 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,43 +34,42 @@ void		set_struct_val_zero(t_filler *filler)
 	filler->p1_count = 0;
 }
 
-/*
-** static void	inner_struct_print_values(t_filler *filler, int fd)
-** {
-** 	ft_dprintf(fd, "\nDUMP::\n\nvalues:\nlast_x\t%d\nlast_xy\t%d\nlast_o\
-** 		\t%d\nlast_oy\t%d\nmap_dim_x\t%d\nmap_dim_y\t%d\npiece_size_y\
-** 		\t%d\npiece_size_x\t%d\nplayer\t%d\n",
-** 		filler->last_x, filler->last_xy, filler->last_o, filler->last_oy,
-** 		filler->map_dim_x, filler->map_dim_y,
-** 		filler->piece_size_y, filler->piece_size_x, filler->player);
-** }
-** 
-** static void	dump_struct_contents(t_filler *filler, int fd)
-** {
-** 	int		i;
-** 	int		j;
-** 
-** 	i = 0;
-** 	j = 0;
-** 	inner_struct_print_values(filler, fd);
-** 	ft_dprintf(fd, "Piece:\n");
-** 	while (filler->piece[i])
-** 		ft_dprintf(fd, "%s\n", filler->piece[i++]);
-** 	i = 0;
-** 	ft_dprintf(fd, "\nMap_in:\n");
-** 	while (filler->map_in[i])
-** 		ft_dprintf(fd, "%s\n", filler->map_in[i++]);
-** 	ft_dprintf(fd, "Map:\n");
-** 	i = 0;
-** 	while (i < filler->map_dim_y)
-** 	{
-** 		j = 0;
-** 		while (j < filler->map_dim_x)
-** 			ft_dprintf(fd, "%d ", filler->map[i][j++]);
-** 		ft_dprintf(fd, " ::%d\n", i++);
-** 	}
-** }
-*/
+
+static void	inner_struct_print_values(t_filler *filler, int fd)
+{
+	ft_dprintf(fd, "\nDUMP::\n\nvalues:\nlast_x\t%d\nlast_xy\t%d\nlast_o\
+		\t%d\nlast_oy\t%d\nmap_dim_x\t%d\nmap_dim_y\t%d\npiece_size_y\
+		\t%d\npiece_size_x\t%d\nplayer\t%d\n",
+		filler->last_x, filler->last_xy, filler->last_o, filler->last_oy,
+		filler->map_dim_x, filler->map_dim_y,
+		filler->piece_size_y, filler->piece_size_x, filler->player);
+}
+
+void	dump_struct_contents(t_filler *filler, int fd)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	inner_struct_print_values(filler, fd);
+	ft_dprintf(fd, "Piece:\n");
+	while (filler->piece[i])
+		ft_dprintf(fd, "%s\n", filler->piece[i++]);
+	i = 0;
+	ft_dprintf(fd, "\nMap_in:\n");
+	while (filler->map_in[i])
+		ft_dprintf(fd, "%s\n", filler->map_in[i++]);
+	ft_dprintf(fd, "Map:\n");
+	i = 0;
+	while (i < filler->map_dim_y)
+	{
+		j = 0;
+		while (j < filler->map_dim_x)
+			ft_dprintf(fd, "%d ", filler->map[i][j++]);
+		ft_dprintf(fd, " ::%d\n", i++);
+	}
+}
 
 static int	filler_loop(t_filler *filler)
 {
@@ -81,7 +80,7 @@ static int	filler_loop(t_filler *filler)
 	{
 		if (!line)
 			continue ;
-		if (!ft_strncmp(line, "Plateau", 8))
+		if (!ft_strncmp(line, "Plateau", 7))
 		{
 			re_fetch(filler);
 			find_placement(filler);

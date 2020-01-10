@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:15:38 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/09 12:46:31 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/09 17:36:44 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 ** so it looks like most of the people seperate each component of the parsing
 ** functionality into seperate functions rather than reading everything at once
 */
-
-/*
-
-
-   /
-   */
 
 /*
 ** Sample input

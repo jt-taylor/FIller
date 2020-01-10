@@ -6,7 +6,7 @@
 #    By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/16 19:30:49 by jtaylor           #+#    #+#              #
-#    Updated: 2019/12/19 10:47:37 by jtaylor          ###   ########.fr        #
+#    Updated: 2020/01/09 17:50:55 by jtaylor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ debug :
 fsan :
 	@make -C ./libft
 	@echo "\tBuilding $(NAME) executable\n"
-	gcc $(FLAGS) $(DEBUG_FLAG) $(FSANITIZE) $(SRC) $(INCLUDES) ./libft/libft.a ./libft/ft_printf/libftprintf.a -o $(NAME)
+	gcc $(DEBUG_FLAG) $(FSANITIZE) $(SRC) $(INCLUDES) ./libft/libft.a ./libft/ft_printf/libftprintf.a -o $(NAME)
 
 
 clean :
