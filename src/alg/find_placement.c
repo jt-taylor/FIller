@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:16:45 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/18 15:29:53 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/10 14:35:17 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int			find_placement(t_filler *filler)
 		while (filler->point.x < filler->map_dim_x)
 		{
 			if (check_if_valid_position(filler,
-					filler->point.x, filler->point.y))
+					filler->point.x, filler->point.y) > 0)
 			{
-				//ft_dprintf(2,"%d %d\n", filler->point.y, filler->point.x);
+				//ft_dprintf(2,"x = %d y = %d\n", filler->point.x, filler->point.y);
 				return (print_placement(filler));
 			}
 			filler->point.x++;

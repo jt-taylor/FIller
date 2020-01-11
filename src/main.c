@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 12:27:51 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/09 17:38:51 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/10 16:09:20 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ static int	filler_loop(t_filler *filler)
 			continue ;
 		if (!ft_strncmp(line, "Plateau", 7))
 		{
+			free(line);
+			get_next_line(0, &line);
 			re_fetch(filler);
+			//dump_struct_contents(filler, 2);
 			find_placement(filler);
 		}
 		free(line);

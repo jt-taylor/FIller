@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:20:02 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/09 18:04:04 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/10 15:57:10 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,37 @@ static int		fetch_new_piece(t_filler *filler)
 }
 */
 
+/*
+** this is just check_map (in map_specific_parsing.c) without the call to
+** check_mapo header
+**
+*/
+
+static int 		fetch_update_map_no_header(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	filler->map_in = (char **)malloc(sizeof(char *) * (filler->map_dim_y + 1));
+	if (get_next_line(0, &line))
+	{
+		i = 0;
+		filler->map_in[i] = ft_strdup(line + 4);
+		free(line);
+		while (++i < filler->map_dim_y)
+		{
+			get_next_line(0, &line);
+			filler->map_in[i] = ft_strdup(line + 4);
+			free(line);
+		}
+		filler->map_in[i] = 0;
+	}
+	else
+		i = -1;
+	return (i);
+}
+
 static int		fetch_new_map(t_filler *filler)
 {
 	int		i;
@@ -81,7 +112,7 @@ static int		fetch_new_map(t_filler *filler)
 	}
 	free(filler->map_in);
 	free(filler->map);
-	i = check_map(filler);
+	i = fetch_update_map_no_header(filler);
 	return (i);
 }
 
@@ -104,6 +135,7 @@ int				re_fetch(t_filler *filler)
 	i = fetch_new_map(filler);
 	if (!i)
 		return (i);
+	//dump_struct_contents(filler, 2);
 	i = fetch_new_piece(filler);
 	if (!i)
 		return (i);

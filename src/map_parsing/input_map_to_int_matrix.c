@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 10:52:06 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/09 12:39:35 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/10 16:06:17 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,13 @@ int			re_input_map_to_int_matrix(t_filler *filler)
 	int		i;
 
 	i = 0;
-	while (filler->map[i])
-		free(filler->map[i++]);
-	free(filler->map);
-	i = 0;
 	i = malloc_for_int_matrix(filler);
 	if (i)
 		return (i);
 	i = input_map_to_int_values(filler);
 	if (i)
 		return (i);
-	check_valid_map(filler);
+	//check_valid_map(filler);
 	return (0);
 }
 
