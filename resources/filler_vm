@@ -299,11 +299,6 @@ class Player
 	def read_from_player()
 		begin
 			@stdout.readline
-		#remove these lines
-		rescue Exception => ex
-			puts "Erorr type #{ex.class}\n"
-			return "exit"
-		#
 		rescue
 			return "exit"
 		end
@@ -543,11 +538,6 @@ if __FILE__ == $0
 						player.end_player trace
 					end
 					if (player.live > 0 && (nb = @line.gsub(/\s+/m, ' ').strip.split(" ")).length != 2)
-						# remove these line
-						puts "line == {"
-						puts @line
-						puts "}"
-						#
 						puts "Player with #{player.piece_char}: error on input"
 						trace.trace_msg "#{player.piece_char}: error on input\n"
 						player.end_player trace
