@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:16:45 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/11 12:15:14 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/11 18:17:25 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			find_placement(t_filler *filler)
 		}
 		filler->point.y++;
 	}
-	//ft_dprintf(2, "in find");
+	ft_dprintf(2, "in find");
 	free_struct(filler);
 	exit(0);
 }

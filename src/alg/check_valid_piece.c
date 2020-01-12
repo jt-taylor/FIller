@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 11:40:16 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/10 14:25:03 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/11 21:34:20 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	check_if_valid_position(t_filler *filler, int x, int y)
 	while (yoff < filler->piece_size_y)
 	{
 		check_pieces(filler, x, y, yoff);
-		if (filler->p1_count >= 2 || filler->p2_count >= 2)
-			return (-1);
 		yoff++;
 	}
 	//
