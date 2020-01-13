@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:15:38 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/10 15:57:46 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/13 14:12:31 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int				check_piece(t_filler *filler)
 			(char **)malloc(sizeof(char *) * (filler->piece_size_y + 1));
 		while (i < filler->piece_size_y)
 		{
-			get_next_line(0, &filler->piece[i]);
+			if (!(get_next_line(0, &filler->piece[i])))
+				filler->piece[i] = ft_strnew((size_t)100);
 			i++;
 		}
 		filler->piece[i] = NULL;
