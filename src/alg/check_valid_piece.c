@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 11:40:16 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/11 21:34:20 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/12 12:35:11 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ static int	inner_check(t_filler *filler)
 	return (ret);
 }
 
+////
+//static inline void	debug_check_piece(t_filler *filler, int x, int y, int yoff, int xoff)
+//{
+//	(void)x;
+//	(void)y;
+//	ft_dprintf(2, "offset x= %d, y= %d\t, Checking piece line::\t%s", yoff, xoff, filler->piece[yoff]);
+//}
+
 static inline void	check_pieces(t_filler *filler, int x, int y, int yoff)
 {
 	//dump_struct_contents(filler, 2);
@@ -42,6 +50,7 @@ static inline void	check_pieces(t_filler *filler, int x, int y, int yoff)
 	xoff = 0;
 	while (xoff < filler->piece_size_x)
 	{
+		//debug_check_piece(filler, x, y, yoff, xoff);
 		if (filler->piece[yoff][xoff] == '*' &&
 			(filler->map[y + yoff][x + xoff] == 33 ||
 			filler->map[y + yoff][x + xoff] == 65))

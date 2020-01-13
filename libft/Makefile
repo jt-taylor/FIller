@@ -6,7 +6,7 @@
 #    By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/21 17:04:25 by jtaylor           #+#    #+#              #
-#    Updated: 2020/01/09 10:37:45 by jtaylor          ###   ########.fr        #
+#    Updated: 2020/01/12 13:35:10 by jtaylor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,11 @@ $(OBJ): $(SRC)
 
 debug : $(SRC)
 	@gcc -g3 $(FLAGS) $(SRC)
+	@make -C ./ft_printf
+	@ar -rcs $(NAME) $(OBJD)
+
+fsan: $(SRC)
+	@gcc -g3 -fsanitize=address $(FLAGS) $(SRC)
 	@make -C ./ft_printf
 	@ar -rcs $(NAME) $(OBJD)
 
