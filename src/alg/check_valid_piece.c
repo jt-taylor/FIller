@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 11:40:16 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/13 14:38:33 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/13 14:40:30 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	check_if_valid_position(t_filler *filler, int x, int y)
 	//dump_struct_contents(filler, 2);
 	while (yoff < filler->piece_size_y)
 	{
-		ft_dprintf(2, "Checking line %s\n", filler->piece[yoff]);
+		//ft_dprintf(2, "Checking line %s\n", filler->piece[yoff]);
 		if (filler->piece[yoff])
 			check_pieces(filler, x, y, yoff);
 		yoff++;
