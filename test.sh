@@ -1,8 +1,6 @@
 #!/bin/bash
-#for i in hello 1 * 2 goodbye 
-#do
-#  echo "Looping ... i is set to $i"
-#done
+#brew install coreutils for gtimeout --> cause the filler_vm
+timeout=10
 path=./resources
 maps=/maps
 players=/players
@@ -26,8 +24,10 @@ do
 			fi
 			#echo "${path}/filler_vm -f ${path}${maps}/${k} ${first_p} ${path}${players}/${j} ${secon_p} ${my_player} -q > results/result\.${j}\.${k}\.${i}"
 			echo "Running "${k} " " ${first_p} " " ${j}\.filler ${secon_p} ${my_player}
-			${path}/filler_vm -f ${path}${maps}/${k} ${first_p} ${path}${players}/${j}\.filler ${secon_p} ${my_player} -q | tee sum_out results/result\.${j}\.${k}\.${i}
-			cat filler.trace >> sum_out && echo -e "\n" >> sum_out
+			#mac doesn't have timeout
+			#brew install coreutils lets you use it [prefixed with g]
+			gtimeout 30s ${path}/filler_vm -f ${path}${maps}/${k} ${first_p} ${path}${players}/${j}\.filler ${secon_p} ${my_player} -q | tee -a sum_out results/result\.${j}\.${k}\.${i}
+			cat filler.trace >> sum_out && echo "\n" >> sum_out
 		done
 	done
 done
