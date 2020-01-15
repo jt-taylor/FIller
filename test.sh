@@ -10,8 +10,7 @@ my_player=./jtaylor\.filler
 mkdir results
 for j in abanlin carli champely grati hcao superjeannot
 do
-	for k in map00
-		#map01 map02
+	for k in map00 map01 map02
 	do
 		for i in 0 1 2 3 4
 		do
@@ -26,8 +25,9 @@ do
 				secon_p=\-p1
 			fi
 			#echo "${path}/filler_vm -f ${path}${maps}/${k} ${first_p} ${path}${players}/${j} ${secon_p} ${my_player} -q > results/result\.${j}\.${k}\.${i}"
-			${path}/filler_vm -f ${path}${maps}/${k} ${first_p} ${path}${players}/${j}\.filler ${secon_p} ${my_player} -q > results/result\.${j}\.${k}\.${i}
-			cat filler.trace >> sum_trace.txt
+			echo "Running "${k} " " ${first_p} " " ${j}\.filler ${secon_p} ${my_player}
+			${path}/filler_vm -f ${path}${maps}/${k} ${first_p} ${path}${players}/${j}\.filler ${secon_p} ${my_player} -q | tee sum_out results/result\.${j}\.${k}\.${i}
+			cat filler.trace >> sum_out && echo -e "\n" >> sum_out
 		done
 	done
 done
