@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 17:02:43 by jtaylor           #+#    #+#             */
-/*   Updated: 2019/12/19 11:11:36 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:21:02 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ static inline void	filler_free_piece(char **piece)
 	free(piece);
 }
 
-void		free_struct(t_filler *filler)
+void				free_struct(t_filler *filler)
 {
 	filler_free_map(filler->map);
 	filler_free_map_in(filler->map_in);
 	filler_free_piece(filler->piece);
-//	free(filler);
 	exit(1);
 }

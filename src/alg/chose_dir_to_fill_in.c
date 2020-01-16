@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:23:37 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/15 15:18:54 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:11:35 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static inline void	inner(t_point *player, int x, int y)
 	player->y = y;
 }
 
-static void		chose_direction(t_filler *filler, t_point *MP, t_point *OP)
+static void			chose_direction(t_filler *filler, t_point *mp, t_point *op)
 {
 	int		dif_x;
 	int		dif_y;
 
-	dif_x = OP->x - MP->x;
-	dif_y = OP->y - MP->y;
+	dif_x = op->x - mp->x;
+	dif_y = op->y - mp->y;
 	if (dif_x < 0 && dif_y < 0)
 		filler->dir_prio = (dif_y > dif_x) ? -1 : 1;
 	else
@@ -33,7 +33,7 @@ static void		chose_direction(t_filler *filler, t_point *MP, t_point *OP)
 	filler->dir_y = dif_y * -1;
 }
 
-void		chose_direction_to_fill_in(t_filler *filler)
+void				chose_direction_to_fill_in(t_filler *filler)
 {
 	char		target;
 	t_point		player_with_o;

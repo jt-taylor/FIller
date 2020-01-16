@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 13:15:38 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/13 16:15:14 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:19:13 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,17 @@ static int		check_piece_header(t_filler *filler, char *line)
 	return (i);
 }
 
+static int		inner_check_piece(t_filler *filler, int i)
+{
+	get_next_line(0, &filler->piece[i]);
+	if (!(filler->piece[i][0]))
+	{
+		free(filler->piece[i]);
+		filler->piece[i] = ft_strnew(100);
+	}
+	return (i + 1);
+}
+
 int				check_piece(t_filler *filler)
 {
 	char	*line;
@@ -121,13 +132,7 @@ int				check_piece(t_filler *filler)
 			(char **)malloc(sizeof(char *) * (filler->piece_size_y + 1));
 		while (i < filler->piece_size_y)
 		{
-			get_next_line(0, &filler->piece[i]);
-			if (!(filler->piece[i][0]))
-			{
-				free(filler->piece[i]);
-				filler->piece[i] = ft_strnew(100);
-			}
-			i++;
+			i = inner_check_piece(filler, i);
 		}
 		filler->piece[i] = NULL;
 	}

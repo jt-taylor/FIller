@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 10:52:06 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/15 12:04:56 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:22:03 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int			re_input_map_to_int_matrix(t_filler *filler)
 	i = input_map_to_int_values(filler);
 	if (i)
 		return (i);
-	//check_valid_map(filler);
 	return (0);
 }
 

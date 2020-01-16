@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_placement.c                                   :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */
+/*   find_placement.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/15 14:16:45 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/15 11:42:40 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:22:28 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	dump_struct_contents(t_filler *filler, int fd);
-
-int	print_placement(t_filler *filler)
+int			print_placement(t_filler *filler)
 {
 	ft_printf("%d %d\n", filler->point.y, filler->point.x);
 	filler->point.x = 0;

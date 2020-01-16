@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 12:27:51 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/15 15:53:18 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:19:43 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void		set_struct_val_zero(t_filler *filler)
 	filler->p2_count = 0;
 }
 
-
 static void	inner_struct_print_values(t_filler *filler, int fd)
 {
 	ft_dprintf(fd, "\nDUMP::\n\nvalues:\nlast_x\t%d\nlast_xy\t%d\nlast_o\
@@ -47,7 +46,7 @@ static void	inner_struct_print_values(t_filler *filler, int fd)
 			filler->dir_x, filler->dir_y);
 }
 
-void	dump_struct_contents(t_filler *filler, int fd)
+void		dump_struct_contents(t_filler *filler, int fd)
 {
 	int		i;
 	int		j;
@@ -87,22 +86,12 @@ static int	filler_loop(t_filler *filler)
 			free(line);
 			get_next_line(0, &line);
 			re_fetch(filler);
-			//dump_struct_contents(filler, 2);
 			find_placement(filler);
 		}
 		free(line);
 	}
 	return (i);
 }
-
-/*
-** static int	validate_parsing_values(t_filler *filler)
-** {
-** 	(void)filler;
-** 	//fill me in;
-** 	return (0);
-** }
-*/
 
 int			main(void)
 {
@@ -114,6 +103,5 @@ int			main(void)
 	chose_direction_to_fill_in(&filler);
 	find_placement(&filler);
 	filler_loop(&filler);
-	//sleep(100);
 	return (0);
 }

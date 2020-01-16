@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 13:55:38 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/15 16:11:55 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 17:23:03 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		find_y_neg_x_neg(t_filler *filler)
 {
-	//ft_dprintf(2, "y_neg_x_neg");
 	filler->point.x = filler->map_dim_x - 1;
 	filler->point.y = filler->map_dim_y - 1;
 	while (filler->point.y > -1)
@@ -35,7 +34,6 @@ int		find_y_neg_x_neg(t_filler *filler)
 
 int		find_y_neg_x_pos(t_filler *filler)
 {
-	//ft_dprintf(2, "y_neg_x_pos");
 	filler->point.x = 0;
 	filler->point.y = filler->map_dim_y - 1;
 	while (filler->point.y > -1)
@@ -53,9 +51,9 @@ int		find_y_neg_x_pos(t_filler *filler)
 	free_struct(filler);
 	exit(0);
 }
+
 int		find_y_pos_x_neg(t_filler *filler)
 {
-	//ft_dprintf(2, "y_pos_x_neg");
 	filler->point.x = filler->map_dim_x - 1;
 	filler->point.y = 0;
 	while (filler->point.y < filler->map_dim_y)
@@ -76,7 +74,6 @@ int		find_y_pos_x_neg(t_filler *filler)
 
 int		find_y_pos_x_pos(t_filler *filler)
 {
-	//ft_dprintf(2, "y_pos_x_pos");
 	filler->point.x = 0;
 	filler->point.y = 0;
 	while (filler->point.y < filler->map_dim_y)

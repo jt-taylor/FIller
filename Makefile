@@ -6,7 +6,7 @@
 #    By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/16 19:30:49 by jtaylor           #+#    #+#              #
-#    Updated: 2020/01/15 16:20:19 by jtaylor          ###   ########.fr        #
+#    Updated: 2020/01/15 17:13:49 by jtaylor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SRC_FILE =	main.c \
 			map_parsing/update_map_and_piece.c \
 			map_parsing/input_map_to_int_matrix.c \
 			cleanup/free_struct.c \
-			alg/find_closest_point.c \
 			alg/check_valid_piece.c \
 			alg/find_placement.c \
 			alg/chose_dir_to_fill_in.c \
