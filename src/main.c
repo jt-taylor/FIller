@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/13 12:27:51 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/10 16:09:20 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 15:53:18 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		set_struct_val_zero(t_filler *filler)
 	filler->check_start_y = -1;
 	filler->player = -1;
 	filler->p1_count = 0;
-	filler->p1_count = 0;
+	filler->p2_count = 0;
 }
 
 
@@ -43,6 +43,8 @@ static void	inner_struct_print_values(t_filler *filler, int fd)
 		filler->last_x, filler->last_xy, filler->last_o, filler->last_oy,
 		filler->map_dim_x, filler->map_dim_y,
 		filler->piece_size_y, filler->piece_size_x, filler->player);
+	ft_dprintf(fd, "dir_prio:\t%d\ndir_x:\t%d\ndir_y:\t%d\n", filler->dir_prio,
+			filler->dir_x, filler->dir_y);
 }
 
 void	dump_struct_contents(t_filler *filler, int fd)
@@ -109,7 +111,7 @@ int			main(void)
 	set_struct_val_zero(&filler);
 	filler_parser(&filler);
 	input_map_to_int_matrix(&filler);
-	//dump_struct_contents(&filler, 2);
+	chose_direction_to_fill_in(&filler);
 	find_placement(&filler);
 	filler_loop(&filler);
 	//sleep(100);

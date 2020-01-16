@@ -6,7 +6,7 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 10:52:06 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/10 16:06:17 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 12:04:56 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	input_map_to_int_values(t_filler *filler)
 		x = 0;
 		while (filler->map_in[y][x])
 		{
-			filler->map[y][x] = (char)(filler->map_in[y][x]) - 46;
+			filler->map[y][x] = (int)(filler->map_in[y][x] - 46);
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 #    By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/16 19:30:49 by jtaylor           #+#    #+#              #
-#    Updated: 2020/01/09 17:50:55 by jtaylor          ###   ########.fr        #
+#    Updated: 2020/01/15 16:20:19 by jtaylor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,10 @@ SRC_FILE =	main.c \
 			cleanup/free_struct.c \
 			alg/find_closest_point.c \
 			alg/check_valid_piece.c \
-			alg/find_placement.c
+			alg/find_placement.c \
+			alg/chose_dir_to_fill_in.c \
+			alg/y_prio.c \
+			alg/x_prio.c
 
 SRC = $(addprefix ./src/, $(SRC_FILE))
 

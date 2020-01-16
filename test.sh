@@ -8,8 +8,10 @@ my_player=./jtaylor\.filler
 mkdir results
 for j in abanlin carli champely grati hcao superjeannot
 do
+	echo $j >> sum_out
 	for k in map00 map01 map02
 	do
+		echo $k >> sum_out
 		for i in 0 1 2 3 4
 		do
 	#		echo "${path}/filler_vm -f ${path}${maps}/${k} -p2 ${path}${players}/${j} -p1 ${my_player} -q" >> what_will_run

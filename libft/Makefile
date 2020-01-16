@@ -6,7 +6,7 @@
 #    By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/10/21 17:04:25 by jtaylor           #+#    #+#              #
-#    Updated: 2020/01/12 13:35:10 by jtaylor          ###   ########.fr        #
+#    Updated: 2020/01/15 11:42:02 by jtaylor          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,6 @@ SRC = ./ft_atoi.c \
 		ft_strcspn.c \
 		ft_stronly_space.c \
 		ft_strstart_w_str.c \
-		ft_count_instance_of_char.c
 
 OBJ = $(SRC:%.c=%.o)
 

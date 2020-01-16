@@ -6,12 +6,13 @@
 /*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 11:40:16 by jtaylor           #+#    #+#             */
-/*   Updated: 2020/01/13 14:40:30 by jtaylor          ###   ########.fr       */
+/*   Updated: 2020/01/15 15:56:20 by jtaylor          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
+//
 void	dump_struct_contents(t_filler *filler, int fd);
 
 static int	inner_check(t_filler *filler)
@@ -45,8 +46,6 @@ static inline void	check_pieces(t_filler *filler, int x, int y, int yoff)
 {
 	//dump_struct_contents(filler, 2);
 	int xoff;
-		//	ft_dprintf(2, "checking::'%c'\t", filler->piece[yoff][xoff]);
-		//	ft_dprintf(2, "and::'%d'\n", filler->map[y + yoff][x + xoff]);
 	xoff = 0;
 	while (xoff < filler->piece_size_x)
 	{
@@ -59,7 +58,11 @@ static inline void	check_pieces(t_filler *filler, int x, int y, int yoff)
 			(filler->map[y + yoff][x + xoff] == 42 ||
 			filler->map[y + yoff][x + xoff] == 74))
 			filler->p2_count += 1;
+		//ft_dprintf(2, "checking::'%c'\t", filler->piece[yoff][xoff]);
+		//ft_dprintf(2, "and::'%d'\n", filler->map[y + yoff][x + xoff]);
+		//ft_dprintf(2, "new count:: p1=%d\tp2=%d\n", filler->p1_count, filler->p2_count);
 		xoff++;
+	//
 	}
 }
 
@@ -67,6 +70,8 @@ int	check_if_valid_position(t_filler *filler, int x, int y)
 {
 	int		yoff;
 
+	filler->p1_count = 0;
+	filler->p2_count = 0;
 	if (y + filler->piece_size_y >= filler->map_dim_y ||
 		x + filler->piece_size_x >= filler->map_dim_x)
 		return (-1);

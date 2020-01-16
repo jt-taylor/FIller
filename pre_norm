@@ -1,0 +1,1214 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_struct.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/16 17:02:43 by jtaylor           #+#    #+#             */
+/*   Updated: 2019/12/19 11:11:36 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+/*
+** todo :: generic matrix(matrices(?)) free function
+*/
+
+static inline void	filler_free_map(int **map)
+{
+	int		i;
+
+	i = 0;
+	while (map[i])
+		free(map[i++]);
+	free(map);
+}
+
+static inline void	filler_free_map_in(char **map_in)
+{
+	int		i;
+
+	i = 0;
+	while (map_in[i])
+		free(map_in[i++]);
+	free(map_in);
+}
+
+static inline void	filler_free_piece(char **piece)
+{
+	int	i;
+
+	i = 0;
+	while (piece[i])
+		free(piece[i++]);
+	free(piece);
+}
+
+void		free_struct(t_filler *filler)
+{
+	filler_free_map(filler->map);
+	filler_free_map_in(filler->map_in);
+	filler_free_piece(filler->piece);
+//	free(filler);
+	exit(1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/13 12:27:51 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 15:53:18 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include "ft_printf.h"
+#include "filler.h"
+
+void		set_struct_val_zero(t_filler *filler)
+{
+	filler->piece = NULL;
+	filler->map_in = NULL;
+	filler->map = NULL;
+	filler->last_x = -1;
+	filler->last_xy = -1;
+	filler->last_o = -1;
+	filler->last_oy = -1;
+	filler->map_dim_x = -1;
+	filler->map_dim_y = -1;
+	filler->piece_size_y = -1;
+	filler->piece_size_x = -1;
+	filler->check_start_x = -1;
+	filler->check_start_y = -1;
+	filler->player = -1;
+	filler->p1_count = 0;
+	filler->p2_count = 0;
+}
+
+
+static void	inner_struct_print_values(t_filler *filler, int fd)
+{
+	ft_dprintf(fd, "\nDUMP::\n\nvalues:\nlast_x\t%d\nlast_xy\t%d\nlast_o\
+		\t%d\nlast_oy\t%d\nmap_dim_x\t%d\nmap_dim_y\t%d\npiece_size_y\
+		\t%d\npiece_size_x\t%d\nplayer\t%d\n",
+		filler->last_x, filler->last_xy, filler->last_o, filler->last_oy,
+		filler->map_dim_x, filler->map_dim_y,
+		filler->piece_size_y, filler->piece_size_x, filler->player);
+	ft_dprintf(fd, "dir_prio:\t%d\ndir_x:\t%d\ndir_y:\t%d\n", filler->dir_prio,
+			filler->dir_x, filler->dir_y);
+}
+
+void	dump_struct_contents(t_filler *filler, int fd)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	inner_struct_print_values(filler, fd);
+	ft_dprintf(fd, "Piece:\n");
+	while (filler->piece[i])
+		ft_dprintf(fd, "%s\n", filler->piece[i++]);
+	i = 0;
+	ft_dprintf(fd, "\nMap_in:\n");
+	while (filler->map_in[i])
+		ft_dprintf(fd, "%s\n", filler->map_in[i++]);
+	ft_dprintf(fd, "Map:\n");
+	i = 0;
+	while (i < filler->map_dim_y)
+	{
+		j = 0;
+		while (j < filler->map_dim_x)
+			ft_dprintf(fd, "%d ", filler->map[i][j++]);
+		ft_dprintf(fd, " ::%d\n", i++);
+	}
+}
+
+static int	filler_loop(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	while ((i = get_next_line(0, &line) >= 0))
+	{
+		if (!line)
+			continue ;
+		if (!ft_strncmp(line, "Plateau", 7))
+		{
+			free(line);
+			get_next_line(0, &line);
+			re_fetch(filler);
+			//dump_struct_contents(filler, 2);
+			find_placement(filler);
+		}
+		free(line);
+	}
+	return (i);
+}
+
+/*
+** static int	validate_parsing_values(t_filler *filler)
+** {
+** 	(void)filler;
+** 	//fill me in;
+** 	return (0);
+** }
+*/
+
+int			main(void)
+{
+	t_filler		filler;
+
+	set_struct_val_zero(&filler);
+	filler_parser(&filler);
+	input_map_to_int_matrix(&filler);
+	chose_direction_to_fill_in(&filler);
+	find_placement(&filler);
+	filler_loop(&filler);
+	//sleep(100);
+	return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   update_map_and_piece.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 14:20:02 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 12:19:19 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+/*
+** because we use the Map header as the trigger in the loop
+** it doesn't make sense to re check for it
+*/
+
+/*
+static int		check_map_no_header_check(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	filler->map_in = (char **)malloc(sizeof(char *) * (filler->map_dim_y + 1));
+	if (get_next_line(0, &line))
+	{
+		free(line);
+		i = 0;
+		while (i < filler->map_dim_y)
+		{
+			get_next_line(0, &line);
+			filler->map_in[i] = ft_strdup(line + 4);
+			free(line);
+			i++;
+		}
+		filler->map_in[i] = 0;
+	}
+	else
+		i = -1;
+	return (i);
+
+}
+
+static int		fetch_new_map(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	while (i < hfiller->map_dim_y)
+		free(filler->map_in[i++]);
+	free(filler->map_in);
+	i = check_map_no_header_check(filler);
+	return (i);
+}
+
+static int		fetch_new_piece(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	while (filler->piece[i])
+		free(filler->piece[i++]);
+	free(filler->piece);
+	i = check_piece(filler);
+	return (i);
+}
+*/
+
+/*
+** this is just check_map (in map_specific_parsing.c) without the call to
+** check_mapo header
+**
+*/
+
+static int 		fetch_update_map_no_header(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	filler->map_in = (char **)malloc(sizeof(char *) * (filler->map_dim_y + 1));
+	if (get_next_line(0, &line))
+	{
+		i = 0;
+		filler->map_in[i] = ft_strdup(line + 4);
+		free(line);
+		while (++i < filler->map_dim_y)
+		{
+			get_next_line(0, &line);
+			filler->map_in[i] = ft_strdup(line + 4);
+			free(line);
+		}
+		filler->map_in[i] = 0;
+	}
+	else
+		i = -1;
+	return (i);
+}
+
+static int		fetch_new_map(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	while (i < filler->map_dim_y)
+	{
+		free(filler->map[i]);
+		free(filler->map_in[i++]);
+	}
+	free(filler->map_in);
+	free(filler->map);
+	i = fetch_update_map_no_header(filler);
+	return (i);
+}
+
+static int		fetch_new_piece(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	while (i < filler->piece_size_y)
+		free(filler->piece[i++]);
+	free(filler->piece);
+	i = check_piece(filler);
+	return (i);
+}
+
+int				re_fetch(t_filler *filler)
+{
+	int	i;
+
+	i = fetch_new_map(filler);
+	if (!i)
+		return (i);
+	i = fetch_new_piece(filler);
+	if (!i)
+		return (i);
+	i = re_input_map_to_int_matrix(filler);
+	if (i != 0)
+		return (i);
+	//dump_struct_contents(filler, 2);
+	return (1);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/13 13:15:38 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/13 16:15:14 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+/*
+** so it looks like most of the people seperate each component of the parsing
+** functionality into seperate functions rather than reading everything at once
+*/
+
+/*
+** Sample input
+**
+**	$$$ exec p1 : [./jtaylor.player]
+**	Plateau 24 40:
+**	    0123456789012345678901234567890123456789
+**	000 ........................................
+**	001 ........................................
+**	002 ........................................
+**	003 ...O....................................
+**	004 ........................................
+**	005 ........................................
+**	006 ........................................
+**	007 ........................................
+**	008 ........................................
+**	009 ........................................
+**	010 ........................................
+**	011 ........................................
+**	012 ........................................
+**	013 ........................................
+**	014 ........................................
+**	015 ........................................
+**	016 ........................................
+**	017 ........................................
+**	018 ........................................
+**	019 ................................X.......
+**	020 ........................................
+**	021 ........................................
+**	022 ........................................
+**	023 ........................................
+**	Piece 2 3:
+**	...
+**	**.
+*/
+
+/*
+** parses this component of the input
+** $$$ exec p1 : [./jtaylor.player]
+*/
+
+static int		check_exec(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	if (get_next_line(0, &line))
+	{
+		if (ft_strstr(line, "jtaylor.filler"))
+		{
+			if (ft_strstr(line, "p1"))
+				i = 1;
+			else if (ft_strstr(line, "p2"))
+				i = 2;
+			else
+				i = -1;
+		}
+		else
+			i = -1;
+	}
+	else
+		i = -1;
+	free(line);
+	filler->player = i;
+	return (i);
+}
+
+/*
+** parses this part of the input
+**  Piece 2 3:
+**  ...
+**  **.
+*/
+
+static int		check_piece_header(t_filler *filler, char *line)
+{
+	int		i;
+
+	i = 0;
+	while (!ft_isdigit(line[i]))
+		i++;
+	filler->piece_size_y = ft_atoi(line + i);
+	while (ft_isdigit(line[i]))
+		i++;
+	if (line[++i])
+		filler->piece_size_x = ft_atoi(line + i);
+	free(line);
+	return (i);
+}
+
+int				check_piece(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	if (get_next_line(0, &line))
+	{
+		i = check_piece_header(filler, line);
+		if (!i)
+			return (i);
+		i = 0;
+		filler->piece =
+			(char **)malloc(sizeof(char *) * (filler->piece_size_y + 1));
+		while (i < filler->piece_size_y)
+		{
+			get_next_line(0, &filler->piece[i]);
+			if (!(filler->piece[i][0]))
+			{
+				free(filler->piece[i]);
+				filler->piece[i] = ft_strnew(100);
+			}
+			i++;
+		}
+		filler->piece[i] = NULL;
+	}
+	else
+		i = -1;
+	return (i);
+}
+
+/*
+** This calls the other parsing functions
+*/
+
+int				filler_parser(t_filler *filler)
+{
+	int		i;
+
+	i = check_exec(filler);
+	if (!i)
+		return (i);
+	i = check_map(filler);
+	if (!i)
+		return (i);
+	i = check_piece(filler);
+	if (!i)
+		return (i);
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input_map_to_int_matrix.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/16 10:52:06 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 12:04:56 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+static int	malloc_for_int_matrix(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	if (!(filler->map =
+				(int **)malloc(sizeof(int *) * (filler->map_dim_y + 1))))
+		return (-1);
+	while (i < filler->map_dim_y)
+	{
+		if (!(filler->map[i] =
+					(int *)malloc(sizeof(int) * (filler->map_dim_x + 1))))
+			return (-1);
+		i++;
+	}
+	filler->map[i] = 0;
+	return (0);
+}
+
+static int	input_map_to_int_values(t_filler *filler)
+{
+	int		x;
+	int		y;
+
+	y = 0;
+	while (filler->map_in[y])
+	{
+		x = 0;
+		while (filler->map_in[y][x])
+		{
+			filler->map[y][x] = (int)(filler->map_in[y][x] - 46);
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
+static void	check_valid_map(t_filler *filler)
+{
+	int		i;
+	int		j;
+
+	if (filler->has_both_pieces)
+		return ;
+	i = 0;
+	while (i < filler->map_dim_y)
+	{
+		j = 0;
+		while (j < filler->map_dim_x)
+		{
+			if (filler->has_both_pieces ^ 1 && filler->map[i][j] == 33)
+			{
+				filler->has_both_pieces |= 1;
+			}
+			else if (filler->has_both_pieces ^ 2 && filler->map[i][j] == 42)
+			{
+				filler->has_both_pieces |= 2;
+			}
+			j++;
+		}
+		i++;
+	}
+	if (filler->has_both_pieces != 3)
+		free_struct(filler);
+}
+
+int			re_input_map_to_int_matrix(t_filler *filler)
+{
+	int		i;
+
+	i = 0;
+	i = malloc_for_int_matrix(filler);
+	if (i)
+		return (i);
+	i = input_map_to_int_values(filler);
+	if (i)
+		return (i);
+	//check_valid_map(filler);
+	return (0);
+}
+
+int			input_map_to_int_matrix(t_filler *filler)
+{
+	int		i;
+
+	i = malloc_for_int_matrix(filler);
+	if (i)
+		return (i);
+	i = input_map_to_int_values(filler);
+	if (i)
+		return (i);
+	check_valid_map(filler);
+	return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_specific_parsing.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/14 13:06:05 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 12:10:12 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+/*
+** these two parse this component of the input
+** Plateau 24 40:
+**     0123456789012345678901234567890123456789
+** 000 ........................................
+** 001 ........................................
+** 002 ........................................
+** 003 ...O....................................
+** 004 ........................................
+** 005 ..........X.............................
+** 006 ........................................
+** ...
+*/
+
+/*
+** this parses this part of the input
+**
+** Plateau 24 40:
+*/
+
+static int		check_map_header(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	if (get_next_line(0, &line))
+	{
+		while (!ft_isdigit(line[i]))
+			i++;
+		if (!line[i])
+			i = -1;
+		else if (ft_isdigit(line[i]))
+		{
+			filler->map_dim_y = ft_atoi((line + i));
+			while (ft_isdigit(line[i]))
+				i++;
+			i++;
+			if (ft_isdigit(line[i]))
+				filler->map_dim_x = ft_atoi(line + i);
+		}
+	}
+	else
+		i = -1;
+	free(line);
+	return (i);
+}
+
+/*
+** parses this part of the input
+**     0123456789012345678901234567890123456789
+** 000 ........................................
+** 001 ........................................
+** 002 ........................................
+** 003 ...O....................................
+** 004 ........................................
+** 005 ..........X.............................
+** 006 ........................................
+** ...
+*/
+
+int				check_map(t_filler *filler)
+{
+	char	*line;
+	int		i;
+
+	i = check_map_header(filler);
+	if (!i)
+		return (i);
+	filler->map_in = (char **)malloc(sizeof(char *) * (filler->map_dim_y + 1));
+	if (get_next_line(0, &line))
+	{
+		free(line);
+		i = 0;
+		while (i < filler->map_dim_y)
+		{
+			get_next_line(0, &line);
+			filler->map_in[i] = ft_strdup(line + 4);
+			free(line);
+			i++;
+		}
+		filler->map_in[i] = 0;
+	}
+	else
+		i = -1;
+	return (i);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_closest_point.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/16 14:47:15 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 12:24:18 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+
+/*
+** finds the last placed piece denoted in the vm by x or o
+** i really should rename the last_y to last_o for clarity's sake
+*/
+
+static void	set_last_x_or_o(t_filler *filler, int which, int x, int y)
+{
+	if (which == 'x')
+	{
+		filler->last_x = x;
+		filler->last_xy = y;
+	}
+	else
+	{
+		filler->last_o = x;
+		filler->last_oy = y;
+	}
+}
+
+static void	find_last_placement(t_filler *filler)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	filler->last_x = -1;
+	filler->last_xy = -1;
+	filler->last_o = -1;
+	filler->last_oy = -1;
+	while (i < filler->map_dim_y)
+	{
+		j = 0;
+		while (j < filler->map_dim_x)
+		{
+			if (filler->map[i][j] == 65)
+				set_last_x_or_o(filler, 'x', j, i);
+			if (filler->map[i][j] == 74)
+				set_last_x_or_o(filler, 'o', j, i);
+			j++;
+		}
+		i++;
+	}
+}
+
+/*
+** this will attempt to find the closest point to the other players pieces
+*/
+
+static void	start_check_at_middle_of_map(t_filler *filler)
+{
+	filler->check_start_x = (filler->map_dim_x / 2);
+	filler->check_start_y =  (filler->map_dim_y / 2);
+}
+
+static void	only_one_piece_placed(t_filler *filler)
+{
+	if (filler->player == 1)
+	{
+		filler->check_start_x = filler->last_o;
+		filler->check_start_y = filler->last_oy;
+	}
+	else if (filler->player == 2)
+	{
+		filler->check_start_x = filler->last_x;
+		filler->check_start_y = filler->last_xy;
+	}
+}
+
+static void	both_placed_pieces(t_filler *filler)
+{
+	int		dif;
+
+	dif = filler->last_x - filler->last_o;
+	if (dif < 0)
+		dif *= -1;
+	filler->check_start_x = (filler->last_x > filler->last_o) ?
+		filler->last_x - (dif / 2) : filler->last_o - (dif / 2);
+	dif = filler->last_xy - filler->last_oy;
+	if (dif < 0)
+		dif *= -1;
+	filler->check_start_y = (filler->last_xy > filler->last_oy) ?
+		filler->last_xy - (dif / 2) : filler->last_oy - (dif / 2);
+}
+
+int		find_closest_point(t_filler *filler)
+{
+	find_last_placement(filler);
+	if (!filler->last_x && !filler->last_xy &&
+			!filler->last_o && !filler->last_oy)
+		start_check_at_middle_of_map(filler);
+	else if ((!filler->last_x || !filler->last_xy) ||
+			(!filler->last_o || filler->last_oy))
+		only_one_piece_placed(filler);
+	else
+		both_placed_pieces(filler);
+	return (0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   x_prio.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/15 16:07:23 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 16:19:13 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+int		find_x_neg_y_neg(t_filler *filler)
+{
+	//ft_dprintf(2, "x_neg_y_neg");
+	filler->point.y = filler->map_dim_y - 1;
+	filler->point.x = filler->map_dim_x - 1;
+	while (filler->point.x > -1)
+	{
+		filler->point.y = filler->map_dim_y - 1;
+		while (filler->point.y > -1)
+		{
+			if (check_if_valid_position(filler,
+					filler->point.x, filler->point.y) > 0)
+				return (print_placement(filler));
+			filler->point.y--;
+		}
+		filler->point.x--;
+	}
+	free_struct(filler);
+	exit(0);
+}
+
+int		find_x_neg_y_pos(t_filler *filler)
+{
+	//ft_dprintf(2, "x_neg_y_pos");
+	filler->point.y = 0;
+	filler->point.x = filler->map_dim_x - 1;
+	while (filler->point.x > -1)
+	{
+		filler->point.y = 0;
+		while (filler->point.y < filler->map_dim_y)
+		{
+			if (check_if_valid_position(filler,
+					filler->point.x, filler->point.y) > 0)
+				return (print_placement(filler));
+			filler->point.y++;
+		}
+		filler->point.x--;
+	}
+	free_struct(filler);
+	exit(0);
+}
+int		find_x_pos_y_neg(t_filler *filler)
+{
+	//ft_dprintf(2, "x_pos_y_neg");
+	filler->point.y = filler->map_dim_y - 1;
+	filler->point.x = 0;
+	while (filler->point.x < filler->map_dim_x)
+	{
+		filler->point.y = filler->map_dim_y - 1;
+		while (filler->point.y > -1)
+		{
+			if (check_if_valid_position(filler,
+					filler->point.x, filler->point.y) > 0)
+				return (print_placement(filler));
+			filler->point.y--;
+		}
+		filler->point.x++;
+	}
+	free_struct(filler);
+	exit(0);
+}
+
+int		find_x_pos_y_pos(t_filler *filler)
+{
+	//ft_dprintf(2, "x_pos_y_pos");
+	filler->point.y = 0;
+	filler->point.x = 0;
+	while (filler->point.x < filler->map_dim_x)
+	{
+		filler->point.y = 0;
+		while (filler->point.y < filler->map_dim_y)
+		{
+			if (check_if_valid_position(filler,
+					filler->point.x, filler->point.y) > 0)
+				return (print_placement(filler));
+			filler->point.y++;
+		}
+		filler->point.x++;
+	}
+	free_struct(filler);
+	exit(0);
+}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   y_prio.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/15 13:55:38 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 16:11:55 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+int		find_y_neg_x_neg(t_filler *filler)
+{
+	//ft_dprintf(2, "y_neg_x_neg");
+	filler->point.x = filler->map_dim_x - 1;
+	filler->point.y = filler->map_dim_y - 1;
+	while (filler->point.y > -1)
+	{
+		filler->point.x = filler->map_dim_x - 1;
+		while (filler->point.x > -1)
+		{
+			if (check_if_valid_position(filler,
+					filler->point.x, filler->point.y) > 0)
+				return (print_placement(filler));
+			filler->point.x--;
+		}
+		filler->point.y--;
+	}
+	free_struct(filler);
+	exit(0);
+}
+
+int		find_y_neg_x_pos(t_filler *filler)
+{
+	//ft_dprintf(2, "y_neg_x_pos");
+	filler->point.x = 0;
+	filler->point.y = filler->map_dim_y - 1;
+	while (filler->point.y > -1)
+	{
+		filler->point.x = 0;
+		while (filler->point.x < filler->map_dim_x)
+		{
+			if (check_if_valid_position(filler,
+					filler->point.x, filler->point.y) > 0)
+				return (print_placement(filler));
+			filler->point.x++;
+		}
+		filler->point.y--;
+	}
+	free_struct(filler);
+	exit(0);
+}
+int		find_y_pos_x_neg(t_filler *filler)
+{
+	//ft_dprintf(2, "y_pos_x_neg");
+	filler->point.x = filler->map_dim_x - 1;
+	filler->point.y = 0;
+	while (filler->point.y < filler->map_dim_y)
+	{
+		filler->point.x = filler->map_dim_x - 1;
+		while (filler->point.x > -1)
+		{
+			if (check_if_valid_position(filler,
+					filler->point.x, filler->point.y) > 0)
+				return (print_placement(filler));
+			filler->point.x--;
+		}
+		filler->point.y++;
+	}
+	free_struct(filler);
+	exit(0);
+}
+
+int		find_y_pos_x_pos(t_filler *filler)
+{
+	//ft_dprintf(2, "y_pos_x_pos");
+	filler->point.x = 0;
+	filler->point.y = 0;
+	while (filler->point.y < filler->map_dim_y)
+	{
+		filler->point.x = 0;
+		while (filler->point.x < filler->map_dim_x)
+		{
+			if (check_if_valid_position(filler,
+					filler->point.x, filler->point.y) > 0)
+				return (print_placement(filler));
+			filler->point.x++;
+		}
+		filler->point.y++;
+	}
+	free_struct(filler);
+	exit(0);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_placement.c                                   :+:      :+:    :+:   */ /*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/15 14:16:45 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 11:42:40 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+void	dump_struct_contents(t_filler *filler, int fd);
+
+int	print_placement(t_filler *filler)
+{
+	ft_printf("%d %d\n", filler->point.y, filler->point.x);
+	filler->point.x = 0;
+	filler->point.y = 0;
+	return (1);
+}
+
+static int	find_x_prio(t_filler *filler)
+{
+	if (filler->dir_x > 0)
+	{
+		if (filler->dir_y > 0)
+			return (find_x_pos_y_pos(filler));
+		else
+			return (find_x_pos_y_neg(filler));
+	}
+	else
+	{
+		if (filler->dir_y > 0)
+			return (find_x_neg_y_pos(filler));
+		else
+			return (find_x_neg_y_neg(filler));
+	}
+}
+
+static int	find_y_prio(t_filler *filler)
+{
+	if (filler->dir_y > 0)
+	{
+		if (filler->dir_x > 0)
+			return (find_y_pos_x_pos(filler));
+		else
+			return (find_y_pos_x_neg(filler));
+	}
+	else
+	{
+		if (filler->dir_x > 0)
+			return (find_y_neg_x_pos(filler));
+		else
+			return (find_y_neg_x_neg(filler));
+	}
+}
+
+int			find_placement(t_filler *filler)
+{
+	if (filler->dir_prio == 1)
+		return (find_y_prio(filler));
+	else
+		return (find_x_prio(filler));
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chose_dir_to_fill_in.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/15 12:23:37 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 15:18:54 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+static inline void	inner(t_point *player, int x, int y)
+{
+	player->x = x;
+	player->y = y;
+}
+
+static void		chose_direction(t_filler *filler, t_point *MP, t_point *OP)
+{
+	int		dif_x;
+	int		dif_y;
+
+	dif_x = OP->x - MP->x;
+	dif_y = OP->y - MP->y;
+	if (dif_x < 0 && dif_y < 0)
+		filler->dir_prio = (dif_y > dif_x) ? -1 : 1;
+	else
+		filler->dir_prio = (dif_y > dif_x) ? 1 : -1;
+	filler->dir_x = dif_x * -1;
+	filler->dir_y = dif_y * -1;
+}
+
+void		chose_direction_to_fill_in(t_filler *filler)
+{
+	char		target;
+	t_point		player_with_o;
+	t_point		player_with_x;
+	int			x;
+	int			y;
+
+	target = (filler->player == 1) ? 'X' : 'O';
+	y = 0;
+	while (y < filler->map_dim_y)
+	{
+		x = 0;
+		while (x < filler->map_dim_x)
+		{
+			if (filler->map[y][x] != 0)
+				(filler->map[y][x] == 'O' - 46) ? inner(&player_with_o, x, y) :
+					inner(&player_with_x, x, y);
+			x++;
+		}
+		y++;
+	}
+	(filler->player == 1) ? chose_direction(filler,
+			&player_with_o, &player_with_x) :
+			chose_direction(filler, &player_with_x, &player_with_o);
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_valid_piece.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jtaylor <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 11:40:16 by jtaylor           #+#    #+#             */
+/*   Updated: 2020/01/15 15:56:20 by jtaylor          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "filler.h"
+
+//
+void	dump_struct_contents(t_filler *filler, int fd);
+
+static int	inner_check(t_filler *filler)
+{
+	int	ret;
+
+	ret = 0;
+	if (filler->player == 1 && filler->p1_count == 1 && filler->p2_count == 0)
+		ret = 1;
+	else if (filler->player == 2 && filler->p1_count == 0 && filler->p2_count == 1)
+		ret = 2;
+	else
+		ret = -1;
+	//
+	//ft_dprintf(2, "p1_count: %d\t\tp2_count: %d", filler->p1_count, filler->p2_count);
+	//ft_dprintf(2, "ret_value == %d\n", ret);
+	filler->p1_count = 0;
+	filler->p2_count = 0;
+	return (ret);
+}
+
+////
+//static inline void	debug_check_piece(t_filler *filler, int x, int y, int yoff, int xoff)
+//{
+//	(void)x;
+//	(void)y;
+//	ft_dprintf(2, "offset x= %d, y= %d\t, Checking piece line::\t%s", yoff, xoff, filler->piece[yoff]);
+//}
+
+static inline void	check_pieces(t_filler *filler, int x, int y, int yoff)
+{
+	//dump_struct_contents(filler, 2);
+	int xoff;
+	xoff = 0;
+	while (xoff < filler->piece_size_x)
+	{
+		//debug_check_piece(filler, x, y, yoff, xoff);
+		if (filler->piece[yoff][xoff] == '*' &&
+			(filler->map[y + yoff][x + xoff] == 33 ||
+			filler->map[y + yoff][x + xoff] == 65))
+			filler->p1_count += 1;
+		else if (filler->piece[yoff][xoff] == '*' &&
+			(filler->map[y + yoff][x + xoff] == 42 ||
+			filler->map[y + yoff][x + xoff] == 74))
+			filler->p2_count += 1;
+		//ft_dprintf(2, "checking::'%c'\t", filler->piece[yoff][xoff]);
+		//ft_dprintf(2, "and::'%d'\n", filler->map[y + yoff][x + xoff]);
+		//ft_dprintf(2, "new count:: p1=%d\tp2=%d\n", filler->p1_count, filler->p2_count);
+		xoff++;
+	//
+	}
+}
+
+int	check_if_valid_position(t_filler *filler, int x, int y)
+{
+	int		yoff;
+
+	filler->p1_count = 0;
+	filler->p2_count = 0;
+	if (y + filler->piece_size_y >= filler->map_dim_y ||
+		x + filler->piece_size_x >= filler->map_dim_x)
+		return (-1);
+	yoff = 0;
+	//dump_struct_contents(filler, 2);
+	while (yoff < filler->piece_size_y)
+	{
+		//ft_dprintf(2, "Checking line %s\n", filler->piece[yoff]);
+		if (filler->piece[yoff])
+			check_pieces(filler, x, y, yoff);
+		yoff++;
+	}
+	//
+	//int i = inner_check(filler);
+	//ft_dprintf(2, "ret == %d", i);
+	//
+	//return (i);
+	return (inner_check(filler));
+}
